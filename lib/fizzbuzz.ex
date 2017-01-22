@@ -14,7 +14,7 @@ defmodule Fizzbuzz do
       Buzz
   """
   def fizzbuzz(first, last) do
-      Enum.to_list(first..last) |> Enum.map(&process/1) |> Enum.map(&handle/1) |> Enum.map(&print/1)
+      Enum.map(first..last, &process/1) |> Enum.map(&handle/1) |> Enum.map(&print/1)
   end
 
   defp process(num) do
