@@ -14,7 +14,14 @@ defmodule Fizzbuzz do
       Buzz
   """
   def fizzbuzz(first, last) do
-      Enum.map(first..last, &process/1) |> Enum.map(&handle/1) |> Enum.map(&print/1)
+      first..last
+      |> Enum.map(&Task.async(fn -> calculate(&1) end))
+      |> Enum.map(&Task.await/1)
+      |> Enum.map(&print/1)
+  end
+
+  defp calculate(num) do
+    handle(process(num))
   end
 
   defp process(num) do
