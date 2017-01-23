@@ -23,6 +23,7 @@ defmodule FizzbuzzTest do
     assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz(true) end)
     assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz(:atom) end)
     assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz("1") end)
+    assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz('1') end)
     assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz([1,2,3]) end)
     assert_raise(ArgumentError, fn -> Fizzbuzz.fizzbuzz({1,2}) end)
   end
