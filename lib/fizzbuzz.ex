@@ -8,45 +8,45 @@ defmodule Fizzbuzz do
 
   ## Examples
 
-      iex> Fizzbuzz.fizzbuzz(3,5)
-      Fizz
-      4
-      Buzz
+      iex> Fizzbuzz.fizzbuzz(3)
+      "Fizz"
+      iex> Fizzbuzz.fizzbuzz(5)
+      "Buzz"
+      iex> Fizzbuzz.fizzbuzz(15)
+      "FizzBuzz"
   """
-  def fizzbuzz(first, last) do
-      first..last
-      |> Enum.map(&Task.async(Fizzbuzz, :calculate, [&1]))
-      |> Enum.map(&Task.await/1)
-      |> Enum.map(&print/1)
-  end
-
-  def calculate(num) do
+  def fizzbuzz(num) when is_integer(num) do
     num |> process |> handle
   end
 
+  def fizzbuzz(not_num) do
+    raise ArgumentError, message: "Fizzbuzz only supports integers. #{inspect not_num} is not supported."
+  end
+
   defp process(num) do
-        {Integer.to_string(num), rem(num, 3), rem(num, 5)}
+    {Integer.to_string(num), rem(num, 3), rem(num, 5)}
   end
 
   defp handle({_,0,0}) do
-    'FizzBuzz'
+    "FizzBuzz"
   end
 
   defp handle({_,0,_}) do
-    'Fizz'
+    "Fizz"
   end
 
   defp handle({_,_,0}) do
-    'Buzz'
+    "Buzz"
   end
 
   defp handle({x,_,_}) do
     x
   end
-
-  defp print(value) do
-    IO.puts(value)
-  end
 end
 
-Fizzbuzz.fizzbuzz(1,100000)
+first = 1
+last = 10000
+first..last
+|> Enum.map(&Task.async(Fizzbuzz, :fizzbuzz, [&1]))
+|> Enum.map(&Task.await/1)
+|> Enum.map(&IO.puts/1)
