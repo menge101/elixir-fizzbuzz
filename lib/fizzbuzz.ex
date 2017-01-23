@@ -21,7 +21,7 @@ defmodule Fizzbuzz do
   end
 
   defp calculate(num) do
-    handle(process(num))
+    num |> process |> handle
   end
 
   defp process(num) do
