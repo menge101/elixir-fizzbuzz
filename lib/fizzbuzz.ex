@@ -15,12 +15,12 @@ defmodule Fizzbuzz do
   """
   def fizzbuzz(first, last) do
       first..last
-      |> Enum.map(&Task.async(fn -> calculate(&1) end))
+      |> Enum.map(&Task.async(Fizzbuzz, :calculate, [&1]))
       |> Enum.map(&Task.await/1)
       |> Enum.map(&print/1)
   end
 
-  defp calculate(num) do
+  def calculate(num) do
     num |> process |> handle
   end
 
@@ -49,4 +49,4 @@ defmodule Fizzbuzz do
   end
 end
 
-Fizzbuzz.fizzbuzz(1,100)
+Fizzbuzz.fizzbuzz(1,100000)
